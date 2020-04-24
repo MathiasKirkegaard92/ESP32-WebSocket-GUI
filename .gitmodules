@@ -1,0 +1,6 @@
+[submodule "components/websocket"]
+	path = components/websocket
+	url = https://github.com/Molorius/esp32-websocket.git
+[submodule "firmware/components/websocket"]
+	path = firmware/components/websocket
+	url = https://github.com/Molorius/esp32-websocket.git
