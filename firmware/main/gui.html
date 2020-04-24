@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<meta charset="utf-8">
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/nexusui@2.0.13/dist/NexusUI.js">
+    </script>
+    <style>
+    #dial {
+        float: left;
+        background: red;
+        width: 25%;
+        height: 280px;
+    }
+
+    #tf {
+        float: left;
+        background: green;
+        width: 25%;
+        height: 280px;
+    }
+
+    #slider {
+        float: right;
+        background: blue;
+        width: 50%;
+        height: 280px;
+    }
+
+    h1 {
+        color: green;
+        text-align: center;
+    }
+    </style>
+</head>
+
+<body>
+    <h1>NexusUI Example </h1>
+    <div align="center">
+        <div id="row">
+            <div id="dial"></div>
+            <div id="tf"></div>
+            <div id="slider"></div>
+        </div>
+    </div>
+    <script>
+    var ws = new WebSocket("ws://192.168.1.40/ws"); // Use mdns for a domain name later on
+    ws.onopen = function() {
+        window.alert("Connected");
+    };
+    ws.onmessage = function(evt) {
+        document.getElementById("display").innerHTML = "temperature: " + evt.data + " C";
+    };
+    // ws.send("Hello world");
+
+    var dial = new Nexus.Dial('#dial');
+    dial.on('change', function(v) {
+        console.log(v);
+        ws.send(v);
+
+    });
+    var envelope = new Nexus.Envelope('#tf');
+    envelope.on('change', function(v) {
+        console.log(envelope.scan(0.5));
+    });
+    var slider = new Nexus.Slider('#slider');
+    slider.on('change', function(v) {
+        console.log(v);
+    });
+    </script>
+    <div>
+        <p id="display">Not connected</p>
+    </div>
+</body>
+
+</html>
